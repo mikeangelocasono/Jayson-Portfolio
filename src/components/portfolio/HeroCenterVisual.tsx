@@ -14,7 +14,7 @@ const HeroCenterVisual = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="relative flex items-center justify-center mb-8"
       >
         {/* Orange Circle Background */}

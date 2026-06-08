@@ -84,7 +84,7 @@ const Contact = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="bg-white p-6 rounded-[1.5rem] border border-border shadow-xl"
           >
             <Form {...form}>

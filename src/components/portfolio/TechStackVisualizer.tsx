@@ -1,6 +1,5 @@
 "use client";
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   Tooltip,
@@ -9,7 +8,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { 
-  Code2, 
   Database, 
   Globe, 
   Layers, 
@@ -19,15 +17,25 @@ import {
   Cpu
 } from 'lucide-react';
 
+const iconMap: Record<string, React.ReactNode> = {
+  "Next.js": <Globe width={24} height={24} />,
+  "TypeScript": <Cpu width={24} height={24} />,
+  "Tailwind": <Layout width={24} height={24} />,
+  "Prisma": <Layers width={24} height={24} />,
+  "PostgreSQL": <Database width={24} height={24} />,
+  "AWS": <Zap width={24} height={24} />,
+  "Auth.js": <Shield width={24} height={24} />,
+};
+
 const TechStackVisualizer = () => {
   const stack = [
-    { name: "Next.js", icon: <Globe />, category: "Frontend", description: "React framework for production-grade applications." },
-    { name: "TypeScript", icon: <Cpu />, category: "Language", description: "Static typing for better developer experience and reliability." },
-    { name: "Tailwind", icon: <Layout />, category: "Styling", description: "Utility-first CSS framework for rapid UI development." },
-    { name: "Prisma", icon: <Layers />, category: "ORM", description: "Next-generation Node.js and TypeScript ORM." },
-    { name: "PostgreSQL", icon: <Database />, category: "Database", description: "Powerful, open source object-relational database system." },
-    { name: "AWS", icon: <Zap />, category: "Infrastructure", description: "Cloud computing services for scalable hosting." },
-    { name: "Auth.js", icon: <Shield />, category: "Security", description: "Authentication for Next.js applications." },
+    { name: "Next.js", category: "Frontend", description: "React framework for production-grade applications." },
+    { name: "TypeScript", category: "Language", description: "Static typing for better developer experience and reliability." },
+    { name: "Tailwind", category: "Styling", description: "Utility-first CSS framework for rapid UI development." },
+    { name: "Prisma", category: "ORM", description: "Next-generation Node.js and TypeScript ORM." },
+    { name: "PostgreSQL", category: "Database", description: "Powerful, open source object-relational database system." },
+    { name: "AWS", category: "Infrastructure", description: "Cloud computing services for scalable hosting." },
+    { name: "Auth.js", category: "Security", description: "Authentication for Next.js applications." },
   ];
 
   return (
@@ -46,7 +54,7 @@ const TechStackVisualizer = () => {
                   className="p-6 rounded-[2rem] border border-border bg-white hover:border-primary/30 hover:shadow-xl transition-all cursor-help group text-center"
                 >
                   <div className="mb-4 p-3 rounded-2xl bg-accent/50 text-primary group-hover:bg-primary group-hover:text-white transition-colors inline-flex">
-                    {React.cloneElement(tech.icon as React.ReactElement, { size: 24 })}
+                    {iconMap[tech.name]}
                   </div>
                   <div className="text-[10px] font-black uppercase tracking-widest">{tech.name}</div>
                 </motion.div>
