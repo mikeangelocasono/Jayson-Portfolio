@@ -37,7 +37,7 @@ const LoadingScreen = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="text-5xl font-black tracking-tighter mb-12"
             >
-              RonDev<span className="text-primary">.</span>
+              Jayson<span className="text-primary">.</span>
             </motion.div>
             
             <div className="w-64 h-[2px] bg-accent overflow-hidden rounded-full">

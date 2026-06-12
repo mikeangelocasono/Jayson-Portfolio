@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import PageTransition from "@/components/portfolio/PageTransition";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ronie Portfolio",
-  description: "Ronie's personal portfolio website",
+  title: "Jayson Portfolio",
+  description: "Jayson's personal portfolio website",
 };
 
 export default function RootLayout({
@@ -36,9 +36,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PageTransition>
-            {children}
-          </PageTransition>
+          {children}
           <Toaster position="top-center" />
         </ThemeProvider>
       </body>

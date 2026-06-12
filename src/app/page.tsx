@@ -3,20 +3,16 @@
 import Navbar from "@/components/portfolio/Navbar";
 import Hero from "@/components/portfolio/Hero";
 import About from "@/components/portfolio/About";
-import Education from "@/components/portfolio/Education";
-import Skills from "@/components/portfolio/Skills";
 import Projects from "@/components/portfolio/Projects";
-import Process from "@/components/portfolio/Process";
+import Achievements from "@/components/portfolio/Achievements";
+import Certificates from "@/components/portfolio/Certificates";
 import Testimonials from "@/components/portfolio/Testimonials";
+import Gallery from "@/components/portfolio/Gallery";
 import Contact from "@/components/portfolio/Contact";
-import CTABanner from "@/components/portfolio/CTABanner";
 import Footer from "@/components/portfolio/Footer";
 import ScrollProgress from "@/components/portfolio/ScrollProgress";
 import CustomCursor from "@/components/portfolio/CustomCursor";
 import BackToTop from "@/components/portfolio/BackToTop";
-import SectionDivider from "@/components/portfolio/SectionDivider";
-import TechMarquee from "@/components/portfolio/TechMarquee";
-import Certificates from "@/components/portfolio/Certificates";
 import LoadingScreen from "@/components/portfolio/LoadingScreen";
 import { motion } from "framer-motion";
 
@@ -39,17 +35,13 @@ export default function Home() {
           </motion.div>
         </section>
         
-        <TechMarquee />
         <About />
-        <SectionDivider />
-        <Education />
-        <Certificates />
-        <Skills />
         <Projects />
-        <Process />
+        <Achievements />
+        <Certificates />
         <Testimonials />
+        <Gallery />
         <Contact />
-        <CTABanner />
       </main>
       <Footer />
     </div>

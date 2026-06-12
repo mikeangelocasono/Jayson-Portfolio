@@ -1,94 +1,82 @@
 "use client";
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import useEmblaCarousel from 'embla-carousel-react';
-import { Button } from '@/components/ui/button';
+import { staggerContainer, fadeInUp, cardHover } from '@/lib/animations';
+import { Quote } from 'lucide-react';
 
 const Testimonials = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-
-  const scrollPrev = React.useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = React.useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "CEO at TechFlow",
-      content: "Working with this developer was a game-changer for our startup. The attention to detail and speed of delivery were exceptional."
+      name: "Prof. Maria Santos",
+      role: "IT Department Head, University",
+      message: "Ronie has consistently demonstrated exceptional programming skills and a deep understanding of software engineering principles. His capstone project was one of the best in his batch.",
+      avatar: "MS"
     },
     {
-      name: "Michael Chen",
-      role: "Product Manager",
-      content: "The UI/UX design skills are top-notch. Our user engagement increased by 40% after the redesign. The code quality is excellent."
+      name: "Juan Dela Cruz",
+      role: "Owner, Green Bean Café",
+      message: "The POS system Ronie built for our café completely transformed how we handle daily transactions. It's fast, reliable, and incredibly easy for my staff to use.",
+      avatar: "JD"
     },
     {
-      name: "Emily Davis",
-      role: "Founder of Bloom",
-      content: "Professional, communicative, and highly skilled. I couldn't have asked for a better partner for our web project."
+      name: "Sarah Lim",
+      role: "Event Coordinator, SSC",
+      message: "Working with Ronie to develop our student council management system was a breeze. He listened to our needs and delivered a platform that exceeded our expectations.",
+      avatar: "SL"
     }
   ];
 
   return (
-    <section className="py-20 bg-accent/30 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
-          <div className="max-w-xl">
-            <h2 className="text-2xl md:text-4xl font-black tracking-tighter mb-3">Client Testimonials</h2>
-            <p className="text-muted-foreground text-sm md:text-base font-medium">
-              Don't just take my word for it. Here's what industry leaders have to say.
-            </p>
+    <section id="testimonials" className="py-24 bg-light-blue/30 dark:bg-slate-900/50 relative overflow-hidden transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-24 xl:px-28">
+        
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold-dark text-[10px] font-bold uppercase tracking-widest mb-4 border border-gold/20">
+            Feedback
           </div>
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={scrollPrev}
-              className="rounded-full h-9 w-9 border-2 border-black/10 bg-white hover:border-primary hover:text-primary transition-all"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={scrollNext}
-              className="rounded-full h-9 w-9 border-2 border-black/10 bg-white hover:border-primary hover:text-primary transition-all"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-black text-deep-navy dark:text-white tracking-tighter transition-colors duration-300">
+            What People Say
+          </h2>
         </div>
 
-        <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex">
-            {testimonials.map((t, index) => (
-              <div key={index} className="embla__slide flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-3">
-                <Card className="h-full border-border bg-white hover:border-primary/30 transition-all duration-500 rounded-[1.5rem] overflow-hidden">
-                  <CardContent className="pt-6 pb-6 px-6 flex flex-col h-full">
-                    <Quote className="h-6 w-6 text-primary/10 mb-5" />
-                    <p className="text-muted-foreground mb-6 italic text-[11px] font-medium flex-grow leading-relaxed">"{t.content}"</p>
-                    <div className="flex items-center gap-3 pt-5 border-t border-border">
-                      <div className="h-8 w-8 rounded-lg bg-primary/5 flex items-center justify-center font-black text-primary text-sm">
-                        {t.name.split(' ').map(n => n[0]).join('')}
-                      </div>
-                      <div>
-                        <div className="font-black uppercase tracking-tighter text-sm">{t.name}</div>
-                        <div className="text-[7px] font-bold uppercase tracking-widest text-muted-foreground">{t.role}</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+        <motion.div 
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          {testimonials.map((testimonial, i) => (
+            <motion.div 
+              key={i} 
+              variants={fadeInUp}
+              {...cardHover}
+              className="bg-white dark:bg-slate-900 border border-royal/10 dark:border-slate-800 rounded-[1.5rem] p-6 hover:shadow-lg dark:hover:shadow-none hover:border-gold/30 dark:hover:border-gold/50 transition-all duration-300 relative"
+            >
+              <div className="absolute top-6 right-6 text-gold/20 dark:text-gold/10">
+                <Quote size={36} />
               </div>
-            ))}
-          </div>
-        </div>
+              
+              <div className="flex items-center gap-4 mb-5 relative z-10">
+                <div className="h-12 w-12 rounded-full bg-navy dark:bg-slate-800 text-white flex items-center justify-center font-black text-base border-2 border-white dark:border-slate-700 shadow-md dark:shadow-none transition-colors duration-300">
+                  {testimonial.avatar}
+                </div>
+                <div>
+                  <h4 className="font-bold text-deep-navy dark:text-white text-base leading-tight transition-colors duration-300">{testimonial.name}</h4>
+                  <p className="text-[10px] font-bold text-dark-gray dark:text-slate-400 uppercase tracking-widest mt-0.5 transition-colors duration-300">
+                    {testimonial.role}
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-sm text-dark-gray dark:text-slate-300 font-medium leading-relaxed relative z-10 italic transition-colors duration-300">
+                "{testimonial.message}"
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+
       </div>
     </section>
   );
