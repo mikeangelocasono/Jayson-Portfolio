@@ -7,10 +7,10 @@ import { ArrowUpRight } from 'lucide-react';
 
 const Footer = () => {
   const socialLinks = [
-    { name: "Facebook", href: "#" },
+    { name: "Facebook", href: "https://www.facebook.com/share/1BqcSrjY7Z/" },
     { name: "Instagram", href: "#" },
-    { name: "GitHub", href: "#" },
-    { name: "LinkedIn", href: "#" },
+    { name: "GitHub", href: "https://github.com/Jayson25-BSIS" },
+    { name: "LinkedIn", href: "https://ph.linkedin.com/in/balbiran-jayson-74a384311" },
   ];
 
   return (
@@ -30,10 +30,10 @@ const Footer = () => {
               together<span className="text-gold">.</span>
             </h2>
             <a 
-              href="mailto:balbiran.jayson@dnsc.edu.ph" 
+              href="mailto:jaysonbalbiran16@gmail.com" 
               className="text-lg md:text-2xl font-black tracking-tighter hover:text-gold transition-colors border-b-2 border-gold pb-1 text-white"
             >
-              balbiran.jayson@dnsc.edu.ph
+              jaysonbalbiran16@gmail.com
             </a>
           </motion.div>
           

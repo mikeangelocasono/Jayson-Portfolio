@@ -7,7 +7,7 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Loader2, Github, Linkedin, Facebook, Copy, Check } from 'lucide-react';
+import { Mail, Phone, Loader2, Github, Linkedin, Facebook, Copy, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { fadeInUp, buttonHover } from '@/lib/animations';
@@ -32,7 +32,7 @@ const Contact = () => {
 
   const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText('balbiran.jayson@dnsc.edu.ph').then(() => {
+    navigator.clipboard.writeText('jaysonbalbiran16@gmail.com').then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }).catch(() => {
@@ -82,8 +82,8 @@ const Contact = () => {
                 <div>
                   <div className="text-[10px] font-bold text-dark-gray dark:text-slate-400 uppercase tracking-widest mb-0.5 transition-colors duration-300">Email Me At</div>
                   <div className="group flex items-center gap-2">
-                    <a href="mailto:balbiran.jayson@dnsc.edu.ph" className="text-sm font-bold text-deep-navy dark:text-white hover:text-gold dark:hover:text-gold transition-colors duration-300">
-                      balbiran.jayson@dnsc.edu.ph
+                    <a href="mailto:jaysonbalbiran16@gmail.com" className="text-sm font-bold text-deep-navy dark:text-white hover:text-gold dark:hover:text-gold transition-colors duration-300">
+                      jaysonbalbiran16@gmail.com
                     </a>
                     <button 
                       onClick={handleCopy}
@@ -100,13 +100,27 @@ const Contact = () => {
                 </div>
               </div>
 
+              <div className="flex items-center gap-4">
+                <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-800 border border-royal/20 dark:border-slate-700 flex items-center justify-center shadow-sm text-gold-dark dark:text-gold transition-colors duration-300">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold text-dark-gray dark:text-slate-400 uppercase tracking-widest mb-0.5 transition-colors duration-300">Call Me At</div>
+                  <div className="group flex items-center gap-2">
+                    <a href="tel:09957233738" className="text-sm font-bold text-deep-navy dark:text-white hover:text-gold dark:hover:text-gold transition-colors duration-300">
+                      09957233738
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <div className="text-[10px] font-bold text-dark-gray dark:text-slate-400 uppercase tracking-widest mb-4 transition-colors duration-300">Follow My Journey</div>
                 <div className="flex gap-4">
                   {[
-                    { icon: <Facebook className="h-4 w-4" />, href: "#" },
-                    { icon: <Github className="h-4 w-4" />, href: "#" },
-                    { icon: <Linkedin className="h-4 w-4" />, href: "#" }
+                    { icon: <Facebook className="h-4 w-4" />, href: "https://www.facebook.com/share/1BqcSrjY7Z/" },
+                    { icon: <Github className="h-4 w-4" />, href: "https://github.com/Jayson25-BSIS" },
+                    { icon: <Linkedin className="h-4 w-4" />, href: "https://ph.linkedin.com/in/balbiran-jayson-74a384311" }
                   ].map((social, i) => (
                     <a 
                       key={i}

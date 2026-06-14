@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Github, Linkedin, Facebook, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 import { staggerContainer, slideInLeft, scaleIn, buttonHover } from '@/lib/animations';
 
 const Hero = () => {
@@ -36,27 +37,29 @@ const Hero = () => {
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-deep-navy dark:text-white leading-[1.1]">
                 Hi, I'm Jayson<span className="text-gold">.</span> <br />
-                <span className="text-dark-gray dark:text-slate-300 text-3xl md:text-4xl lg:text-5xl">Junior Web Developer</span>
+                <span className="text-dark-gray dark:text-slate-300 text-3xl md:text-3xl lg:text-4xl">Information Systems Developer & Student Leader</span>
               </h1>
               
               <p className="text-base text-dark-gray dark:text-slate-400 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                I build responsive, modern, and easy-to-use websites with a focus on clean design and great user experiences. Based in Panabo City.
+                I am a graduating Bachelor of Science in Information Systems student at Davao del Norte State College, passionate about developing innovative digital solutions that address real-world challenges. I specialize in web development, information systems, UI/UX design, and technology-driven community initiatives, combining technical expertise with leadership and project management experience.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
               <motion.div {...buttonHover} className="w-full sm:w-auto">
-                <Button size="lg" className="h-12 px-6 rounded-full bg-gold text-deep-navy hover:bg-gold/90 font-black uppercase tracking-widest text-[11px] gap-2 shadow-md shadow-gold/20 w-full transition-all">
-                  <Download className="h-4 w-4" /> Download CV
+                <Button asChild size="lg" className="h-12 px-6 rounded-full bg-gold text-deep-navy hover:bg-gold/90 font-black uppercase tracking-widest text-[11px] gap-2 shadow-md shadow-gold/20 w-full transition-all">
+                  <a href="/Balbiran CV.pdf" download="Balbiran CV.pdf">
+                    <Download className="h-4 w-4" /> Download CV
+                  </a>
                 </Button>
               </motion.div>
               
               <div className="flex items-center gap-3">
                 {[
-                  { icon: <Github className="h-4 w-4" />, href: "#" },
-                  { icon: <Linkedin className="h-4 w-4" />, href: "#" },
-                  { icon: <Facebook className="h-4 w-4" />, href: "#" },
-                  { icon: <Mail className="h-4 w-4" />, href: "mailto:balbiran.jayson@dnsc.edu.ph" }
+                  { icon: <Github className="h-4 w-4" />, href: "https://github.com/Jayson25-BSIS" },
+                  { icon: <Linkedin className="h-4 w-4" />, href: "https://ph.linkedin.com/in/balbiran-jayson-74a384311" },
+                  { icon: <Facebook className="h-4 w-4" />, href: "https://www.facebook.com/share/1BqcSrjY7Z/" },
+                  { icon: <Mail className="h-4 w-4" />, href: "mailto:jaysonbalbiran16@gmail.com" }
                 ].map((social, i) => (
                   <motion.a 
                     {...buttonHover}
@@ -73,14 +76,14 @@ const Hero = () => {
             {/* Quick Statistics */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-royal/10 mt-6">
               {[
-                { label: "Projects", value: "3+" },
-                { label: "Awards", value: "3" },
-                { label: "Roles", value: "2+" },
-                { label: "Certs", value: "5+" }
+                { label: "Projects Developed", value: "10+" },
+                { label: "Awards & Recognitions", value: "15+" },
+                { label: "Leadership Roles", value: "5" },
+                { label: "Certifications", value: "20+" }
               ].map((stat, i) => (
                 <div key={i} className="flex flex-col">
                   <span className="text-2xl font-black text-deep-navy dark:text-white">{stat.value}</span>
-                  <span className="text-[10px] font-bold text-dark-gray dark:text-slate-400 uppercase tracking-wider">{stat.label}</span>
+                  <span className="text-[10px] font-bold text-dark-gray dark:text-slate-400 uppercase tracking-wider leading-snug mt-1">{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -101,13 +104,14 @@ const Hero = () => {
             {/* Main Circular Profile Holder */}
             <div className="relative w-full aspect-square rounded-full p-2 bg-white dark:bg-slate-900 shadow-xl shadow-navy/10 dark:shadow-none border-2 border-navy dark:border-slate-800 overflow-hidden">
               <div className="w-full h-full rounded-full bg-light-blue dark:bg-slate-800 overflow-hidden relative border border-royal/20 dark:border-slate-700 flex items-center justify-center">
-                {/* Professional Photo Placeholder - using object-cover when image is present */}
-                <span className="text-royal dark:text-slate-300 font-bold text-xs bg-white/50 dark:bg-slate-900/50 px-3 py-1.5 rounded-lg backdrop-blur-sm border border-white/40 dark:border-slate-700 z-10 text-center">
-                  Profile <br/> Photo
-                </span>
-                
-                {/* Subtle internal blob for placeholder visual */}
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gold rounded-full blur-[40px] opacity-40" />
+                <Image
+                  src="/Profile.jpg"
+                  alt="Jayson S. Balbiran profile photo"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 280px, 380px"
+                  priority
+                />
               </div>
             </div>
             

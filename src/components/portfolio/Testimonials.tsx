@@ -10,19 +10,19 @@ const Testimonials = () => {
     {
       name: "Prof. Maria Santos",
       role: "IT Department Head, University",
-      message: "Ronie has consistently demonstrated exceptional programming skills and a deep understanding of software engineering principles. His capstone project was one of the best in his batch.",
+      message: "Jayson has consistently demonstrated exceptional programming skills and a deep understanding of software engineering principles. His capstone project was one of the best in his batch.",
       avatar: "MS"
     },
     {
       name: "Juan Dela Cruz",
       role: "Owner, Green Bean Café",
-      message: "The POS system Ronie built for our café completely transformed how we handle daily transactions. It's fast, reliable, and incredibly easy for my staff to use.",
+      message: "The POS system Jayson built for our café completely transformed how we handle daily transactions. It's fast, reliable, and incredibly easy for my staff to use.",
       avatar: "JD"
     },
     {
       name: "Sarah Lim",
       role: "Event Coordinator, SSC",
-      message: "Working with Ronie to develop our student council management system was a breeze. He listened to our needs and delivered a platform that exceeded our expectations.",
+      message: "Working with Jayson to develop our student council management system was a breeze. He listened to our needs and delivered a platform that exceeded our expectations.",
       avatar: "SL"
     }
   ];
