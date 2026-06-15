@@ -15,7 +15,7 @@ import {
 import { achievements, PortfolioDocument } from '@/data/portfolio';
 
 const CATEGORIES = ["All", "Academic Honors", "Capstone", "Competitions", "Leadership", "Systems Developed"];
-const INITIAL_VISIBLE = 6;
+const INITIAL_VISIBLE = 8;
 
 const Achievements = () => {
   const [selectedAchievement, setSelectedAchievement] = useState<PortfolioDocument | null>(null);
@@ -37,7 +37,7 @@ const Achievements = () => {
 
   const handleViewMore = () => {
     if (hasMore) {
-      setVisibleCount(prev => prev + 6);
+      setVisibleCount(prev => prev + 8);
     } else {
       setVisibleCount(INITIAL_VISIBLE);
       document.getElementById('achievements')?.scrollIntoView({ behavior: 'smooth' });
@@ -49,13 +49,13 @@ const Achievements = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15
+        staggerChildren: 0.08
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
   };
 
@@ -65,7 +65,7 @@ const Achievements = () => {
       {/* Subtle Background SVG Trophy Watermark */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-        whileInView={{ opacity: 0.03, scale: 1, rotate: 0 }}
+        whileInView={{ opacity: 0.02, scale: 1, rotate: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
         viewport={{ once: true }}
         className="absolute top-1/4 right-[-10%] md:right-0 w-[600px] h-[600px] md:w-[800px] md:h-[800px] pointer-events-none z-0 text-navy dark:text-white"
@@ -75,7 +75,7 @@ const Achievements = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 xl:px-20 relative z-10">
         
-        {/* Header (Centered) */}
+        {/* Header */}
         <motion.div 
           variants={fadeInUp}
           initial="initial"
@@ -100,7 +100,7 @@ const Achievements = () => {
             <button
               key={tab}
               onClick={() => handleTabChange(tab)}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 border backdrop-blur-md ${
+              className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border backdrop-blur-md ${
                 activeTab === tab 
                   ? 'bg-navy text-white border-navy shadow-lg shadow-navy/20 dark:bg-gold dark:text-deep-navy dark:border-gold dark:shadow-gold/10' 
                   : 'bg-white/50 text-navy border-royal/10 hover:bg-gold/10 hover:text-deep-navy hover:border-gold/30 dark:bg-slate-900/50 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-white'
@@ -111,30 +111,26 @@ const Achievements = () => {
           ))}
         </div>
 
-        {/* Grid (Staggered / Masonry-feel) */}
+        {/* Grid Setup */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           animate="show"
           key={activeTab} // Force re-animation on tab change
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {visibleAchievements.map((achievement, i) => (
+            {visibleAchievements.map((achievement) => (
               <motion.div
                 key={achievement.id}
                 layout
                 variants={itemVariants}
-                className={`h-full ${achievement.featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
+                className="h-full"
               >
                 <div 
                   {...cardHover}
                   onClick={() => setSelectedAchievement(achievement)}
-                  className={`relative flex flex-col h-full cursor-pointer backdrop-blur-xl border ${
-                    achievement.featured 
-                      ? 'bg-gradient-to-br from-deep-navy to-navy border-gold/50 shadow-2xl shadow-gold/10 dark:shadow-gold/5' 
-                      : 'bg-white/70 dark:bg-slate-900/70 border-royal/10 dark:border-slate-800 shadow-xl shadow-royal/5'
-                  } rounded-[2rem] overflow-hidden transition-all duration-500 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold hover:-translate-y-2`}
+                  className="relative flex flex-col h-full cursor-pointer bg-white dark:bg-slate-900 border border-royal/10 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden transition-all duration-300 hover:border-gold hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                   tabIndex={0}
                   role="button"
                   aria-label={`View details for ${achievement.displayTitle}`}
@@ -145,57 +141,49 @@ const Achievements = () => {
                     }
                   }}
                 >
-                  {/* Image Preview */}
-                  <div className={`relative w-full overflow-hidden ${achievement.featured ? 'h-64 md:h-72 lg:h-80' : 'h-56'} bg-slate-100 dark:bg-slate-950/50 flex items-center justify-center p-6 border-b ${achievement.featured ? 'border-gold/20' : 'border-royal/5 dark:border-slate-800'}`}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none z-10" />
-                    
-                    <div className={`relative w-full h-full overflow-hidden shadow-xl ${achievement.featured ? 'rounded-2xl border border-gold/30' : 'rounded-xl border border-royal/10 dark:border-slate-700 bg-white'}`}>
+                  {/* Image Container aspect-[4/3] uncropped object-contain */}
+                  <div className="relative w-full aspect-[4/3] bg-slate-50 dark:bg-slate-800/50 overflow-hidden border-b border-royal/5 dark:border-slate-800 flex items-center justify-center p-2 rounded-t-2xl">
+                    <div className="relative w-full h-full rounded-xl overflow-hidden bg-white dark:bg-slate-900 flex items-center justify-center">
                       <Image
                         src={achievement.image}
                         alt={achievement.title}
                         fill
-                        sizes={achievement.featured ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        className="object-contain p-2 transition-transform duration-700 hover:scale-105"
                       />
                     </div>
                     
                     {achievement.featured && (
-                      <div className="absolute top-6 right-6 bg-gradient-to-r from-gold to-yellow-400 text-deep-navy text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full flex items-center gap-1.5 shadow-lg shadow-gold/30 z-20">
-                        <Star className="h-3 w-3 fill-current" /> Major Award
+                      <div className="absolute top-3 right-3 bg-gold text-deep-navy text-[8px] font-black uppercase tracking-widest py-1 px-2.5 rounded-full flex items-center gap-1 shadow-md shadow-gold/20 z-10">
+                        <Star className="h-2.5 w-2.5 fill-current" /> Major Award
                       </div>
                     )}
                     {achievement.year && (
-                      <div className={`absolute bottom-6 left-6 text-[10px] font-bold backdrop-blur-md px-3 py-1.5 rounded-lg border z-20 uppercase tracking-widest ${
-                        achievement.featured ? 'bg-black/50 text-gold border-gold/30' : 'bg-black/70 text-white border-white/20'
-                      }`}>
+                      <div className="absolute bottom-3 left-3 text-[8px] font-bold bg-white/95 text-navy dark:bg-slate-900/95 dark:text-white backdrop-blur-md px-2 py-0.5 rounded border border-royal/10 dark:border-slate-700 z-10 uppercase tracking-widest shadow-sm">
                         {achievement.year}
                       </div>
                     )}
                   </div>
                   
                   {/* Card Content */}
-                  <div className={`p-8 flex flex-col flex-1 ${achievement.featured ? '' : ''}`}>
-                    <div className="flex items-center gap-2 mb-4">
-                      <Trophy className={`h-4 w-4 ${achievement.featured ? 'text-gold' : 'text-royal dark:text-gold'}`} />
-                      <span className={`text-[10px] font-black uppercase tracking-widest transition-colors duration-300 ${achievement.featured ? 'text-gold' : 'text-royal dark:text-gold'}`}>
+                  <div className="p-5 flex flex-col flex-1 bg-white dark:bg-slate-900">
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <Trophy className="h-3.5 w-3.5 text-royal dark:text-gold" />
+                      <span className="text-[8px] font-bold uppercase tracking-widest text-royal dark:text-gold transition-colors duration-300">
                         {achievement.category}
                       </span>
                     </div>
                     
-                    <h3 className={`text-xl lg:text-2xl font-black mb-3 transition-colors duration-300 leading-tight ${achievement.featured ? 'text-white' : 'text-deep-navy dark:text-white group-hover:text-navy dark:group-hover:text-gold'}`}>
+                    <h3 className="text-sm font-black mb-2 text-deep-navy dark:text-white transition-colors duration-300 line-clamp-2 group-hover:text-royal dark:group-hover:text-gold leading-tight">
                       {achievement.displayTitle}
                     </h3>
-                    <p className={`text-sm md:text-base font-medium leading-relaxed transition-colors duration-300 ${achievement.featured ? 'text-slate-300 line-clamp-3' : 'text-dark-gray dark:text-slate-400 line-clamp-2'}`}>
+                    <p className="text-xs font-medium leading-relaxed text-dark-gray dark:text-slate-400 transition-colors duration-300 line-clamp-2">
                       {achievement.description}
                     </p>
                     
-                    <div className={`mt-auto pt-6 flex items-center justify-end border-t ${achievement.featured ? 'border-gold/20' : 'border-royal/5 dark:border-slate-800'}`}>
-                      <span className={`text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 transition-colors duration-300 px-4 py-2 rounded-xl ${
-                        achievement.featured 
-                          ? 'bg-gold/10 text-gold hover:bg-gold hover:text-deep-navy' 
-                          : 'bg-royal/5 text-navy dark:bg-slate-800 dark:text-slate-300 hover:bg-royal/10 dark:hover:bg-gold/10 group-hover:text-royal dark:group-hover:text-gold'
-                      }`}>
-                        View Details <ExternalLink className="h-3 w-3" />
+                    <div className="mt-auto pt-4 flex items-center justify-end border-t border-slate-100 dark:border-slate-800">
+                      <span className="text-[9px] font-bold uppercase tracking-widest flex items-center gap-1 text-navy dark:text-slate-300 group-hover:text-royal dark:group-hover:text-gold transition-colors duration-300 bg-slate-50 dark:bg-slate-800 px-2.5 py-1.5 rounded-lg">
+                        View Details <ExternalLink className="h-2.5 w-2.5" />
                       </span>
                     </div>
                   </div>
@@ -210,7 +198,7 @@ const Achievements = () => {
           <div className="mt-16 flex justify-center">
             <button
               onClick={handleViewMore}
-              className="group flex items-center gap-2 bg-navy dark:bg-slate-800 text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-deep-navy transition-all duration-300 shadow-xl shadow-navy/10 hover:shadow-gold/20"
+              className="group flex items-center gap-2 bg-white dark:bg-slate-900 border border-royal/20 dark:border-slate-700 text-navy dark:text-white px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-deep-navy hover:border-gold transition-all duration-300 shadow-xl shadow-navy/5"
             >
               {hasMore ? (
                 <>View More <ChevronDown className="h-4 w-4 group-hover:translate-y-1 transition-transform" /></>
@@ -223,7 +211,7 @@ const Achievements = () => {
 
       </div>
 
-      {/* shadcn/ui Dialog Modal for Award Details */}
+      {/* Dialog Modal for Award Details */}
       <Dialog open={!!selectedAchievement} onOpenChange={(open) => !open && setSelectedAchievement(null)}>
         <DialogContent className="max-w-5xl w-[95vw] p-0 overflow-hidden bg-white dark:bg-slate-950 border-royal/20 dark:border-slate-800 rounded-2xl md:rounded-3xl shadow-2xl">
           {selectedAchievement && (
@@ -252,7 +240,7 @@ const Achievements = () => {
                     </span>
                     {selectedAchievement.featured && (
                       <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-deep-navy px-3 py-1.5 rounded-lg border border-royal/30 flex items-center gap-1.5 shadow-md">
-                        <Star className="h-3 w-3 fill-current" /> Major Award
+                        <Star className="h-3 w-3 fill-current animate-pulse text-gold" /> Major Award
                       </span>
                     )}
                   </div>
