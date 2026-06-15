@@ -1,31 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeInUp, buttonHover } from '@/lib/animations';
-import { X, ArrowRight } from 'lucide-react';
+import { X, ArrowRight, Expand } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-interface GalleryItem {
-  category: string;
-  title: string;
-  color: string;
-}
+import { galleryImages, GalleryImage } from '@/data/portfolio';
 
 const Gallery = () => {
-  const baseItems: GalleryItem[] = [
-    { category: "Competition", title: "BYTEFEST 2024", color: "bg-navy" },
-    { category: "Event", title: "Tech Symposium", color: "bg-gold" },
-    { category: "Organization", title: "SITE Meeting", color: "bg-royal" },
-    { category: "Project", title: "Hackathon Presentation", color: "bg-deep-navy" },
-    { category: "Competition", title: "Saludo Awards", color: "bg-gold" },
-    { category: "Event", title: "Web Dev Workshop", color: "bg-navy" },
-  ];
+  // Triplicate the array to create a full continuous circle for the rotating layout
+  const rotatingItems = [...galleryImages, ...galleryImages, ...galleryImages];
 
-  // Triplicate the array to create a full continuous circle of 18 items
-  const galleryItems = [...baseItems, ...baseItems, ...baseItems];
-
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [isViewAllOpen, setIsViewAllOpen] = useState(false);
 
   // Close modals on Escape key
@@ -52,7 +39,7 @@ const Gallery = () => {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [selectedImage]);
+  }, [selectedImage, isViewAllOpen]);
 
   return (
     <>
@@ -68,11 +55,11 @@ const Gallery = () => {
             '--radius': '320px', 
           } as React.CSSProperties}
         >
-          {/* We apply a responsive radius via utility classes that update the CSS variable */}
+          {/* Responsive radius for the circle */}
           <div className="absolute inset-0 sm:[--radius:450px] lg:[--radius:650px] animate-spin hover:[animation-play-state:paused] flex items-center justify-center" style={{ animationDuration: '60s' }}>
             
-            {galleryItems.map((item, index) => {
-              const angle = index * (360 / galleryItems.length);
+            {rotatingItems.map((item, index) => {
+              const angle = index * (360 / rotatingItems.length);
               
               return (
                 <div
@@ -86,11 +73,13 @@ const Gallery = () => {
                 >
                   <div className="w-32 h-40 sm:w-40 sm:h-56 lg:w-48 lg:h-64 rounded-3xl overflow-hidden border border-royal/20 dark:border-slate-800 shadow-xl shadow-navy/10 dark:shadow-none bg-light-blue/50 dark:bg-slate-900 transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl group-hover:border-gold/50 relative">
                     
-                    {/* Image Placeholder Background */}
-                    <div className={`absolute inset-0 ${item.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`} />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-navy/40 dark:text-slate-500 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Image</span>
-                    </div>
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 768px) 150px, 200px"
+                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    />
                     
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-deep-navy/90 via-navy/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4 sm:p-5">
@@ -129,9 +118,9 @@ const Gallery = () => {
             <motion.div {...buttonHover} className="inline-block">
               <Button 
                 onClick={() => setIsViewAllOpen(true)}
-                className="h-12 px-8 rounded-full bg-navy dark:bg-white text-white dark:text-deep-navy hover:bg-gold dark:hover:bg-gold dark:hover:text-deep-navy font-black uppercase tracking-widest text-xs gap-2 transition-all shadow-md z-20 relative pointer-events-auto"
+                className="h-12 px-8 rounded-full bg-navy dark:bg-slate-800 text-white dark:text-white hover:bg-gold dark:hover:bg-gold dark:hover:text-deep-navy font-black uppercase tracking-widest text-xs gap-2 transition-all shadow-md z-20 relative pointer-events-auto"
               >
-                View More Photos <ArrowRight className="h-4 w-4" />
+                View All Photos <ArrowRight className="h-4 w-4" />
               </Button>
             </motion.div>
           </motion.div>
@@ -155,6 +144,7 @@ const Gallery = () => {
                 setSelectedImage(null);
               }}
               className="absolute top-6 right-6 p-2 rounded-full bg-white/10 dark:bg-slate-800 text-white hover:bg-gold hover:text-deep-navy dark:hover:text-slate-900 transition-colors z-50"
+              aria-label="Close modal"
             >
               <X className="h-6 w-6" />
             </button>
@@ -165,20 +155,22 @@ const Gallery = () => {
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl h-full max-h-[85vh] rounded-[1.5rem] overflow-hidden shadow-2xl flex flex-col border border-white/10 dark:border-slate-800 bg-navy dark:bg-slate-900"
+              className="relative w-full max-w-6xl h-[90vh] rounded-[1.5rem] overflow-hidden shadow-2xl flex flex-col border border-white/10 dark:border-slate-800 bg-navy dark:bg-slate-900"
             >
-              <div className="absolute top-0 left-0 w-full p-4 bg-gradient-to-b from-black/60 to-transparent z-10 flex flex-col">
+              <div className="absolute top-0 left-0 w-full p-6 bg-gradient-to-b from-black/80 to-transparent z-10 flex flex-col pointer-events-none">
                 <span className="text-gold text-[10px] font-bold uppercase tracking-widest">{selectedImage.category}</span>
-                <span className="text-white text-lg font-black">{selectedImage.title}</span>
+                <span className="text-white text-lg md:text-2xl font-black">{selectedImage.title}</span>
               </div>
               
-              <div className={`w-full h-full ${selectedImage.color} opacity-20 absolute inset-0`} />
-              <div className="relative w-full h-full flex items-center justify-center p-4">
-                 <div className="w-full h-full flex items-center justify-center border-2 border-dashed border-white/20 dark:border-slate-700 rounded-xl relative z-10">
-                    <span className="text-white/60 dark:text-slate-400 font-bold text-base md:text-xl text-center px-4">
-                      {selectedImage.title} <br /> (Full Image Placeholder - object-contain)
-                    </span>
-                 </div>
+              <div className="relative w-full h-full bg-black/50">
+                 <Image
+                   src={selectedImage.src}
+                   alt={selectedImage.alt}
+                   fill
+                   className="object-contain"
+                   sizes="100vw"
+                   priority
+                 />
               </div>
             </motion.div>
           </motion.div>
@@ -211,39 +203,44 @@ const Gallery = () => {
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-7xl h-full max-h-[85vh] flex flex-col"
+              className="relative w-full max-w-7xl h-full max-h-[90vh] flex flex-col"
             >
               <div className="mb-8 text-center">
                 <h2 className="text-3xl font-black text-deep-navy dark:text-white tracking-tighter">
                   All Gallery Photos
                 </h2>
                 <p className="text-dark-gray dark:text-slate-400 mt-2 font-medium">
-                  A complete look at my moments and experiences.
+                  A complete look at my moments, events, and experiences.
                 </p>
               </div>
               
-              <div className="overflow-y-auto pr-4 pb-12 custom-scrollbar">
+              <div className="overflow-y-auto pr-2 pb-12 custom-scrollbar">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {baseItems.map((item, index) => (
+                  {galleryImages.map((item) => (
                     <motion.div
-                      key={index}
+                      key={item.id}
                       initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4 }}
                       onClick={() => setSelectedImage(item)}
-                      className="group relative w-full h-64 rounded-3xl overflow-hidden border border-royal/20 dark:border-slate-800 shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-gold/50"
+                      className="group relative w-full aspect-video rounded-3xl overflow-hidden border border-royal/20 dark:border-slate-800 shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-gold/50"
                     >
-                      <div className={`absolute inset-0 ${item.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`} />
-                      <div className="absolute inset-0 flex items-center justify-center bg-light-blue/30 dark:bg-slate-900/50">
-                        <span className="text-navy/50 dark:text-slate-500 text-xs font-bold uppercase tracking-widest">Image Placeholder</span>
-                      </div>
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
                       
-                      <div className="absolute inset-0 bg-gradient-to-t from-deep-navy/90 via-navy/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                      <div className="absolute inset-0 bg-gradient-to-t from-deep-navy/90 via-navy/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
                         <span className="text-[10px] font-bold text-gold uppercase tracking-widest mb-2">
                           {item.category}
                         </span>
-                        <h4 className="text-white text-lg font-black leading-tight">
+                        <h4 className="text-white text-lg font-black leading-tight flex items-center justify-between">
                           {item.title}
+                          <Expand className="h-4 w-4 text-white/50" />
                         </h4>
                       </div>
                     </motion.div>
@@ -254,6 +251,29 @@ const Gallery = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0.05);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(0, 0, 0, 0.15);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(253, 181, 21, 0.8);
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      `}</style>
     </>
   );
 };
