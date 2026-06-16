@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeInUp, cardHover } from '@/lib/animations';
@@ -14,26 +14,14 @@ import {
 } from "@/components/ui/dialog";
 import { certifications, PortfolioDocument } from '@/data/portfolio';
 
-const CATEGORIES = ["All", "Capstone & OJT", "Competitions", "Leadership", "Participation", "Python", "Workshops & Trainings"];
 const INITIAL_VISIBLE = 8;
 
 const Certificates = () => {
   const [selectedCertificate, setSelectedCertificate] = useState<PortfolioDocument | null>(null);
-  const [activeTab, setActiveTab] = useState("All");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 
-  const filteredCertifications = useMemo(() => {
-    if (activeTab === "All") return certifications;
-    return certifications.filter(c => c.category === activeTab);
-  }, [activeTab]);
-
-  const visibleCertifications = filteredCertifications.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredCertifications.length;
-
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    setVisibleCount(INITIAL_VISIBLE);
-  };
+  const visibleCertifications = certifications.slice(0, visibleCount);
+  const hasMore = visibleCount < certifications.length;
 
   const handleViewMore = () => {
     if (hasMore) {
@@ -82,29 +70,11 @@ const Certificates = () => {
           </p>
         </motion.div>
 
-        {/* Category Tabs (Horizontal) */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
-          {CATEGORIES.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => handleTabChange(tab)}
-              className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border backdrop-blur-md ${
-                activeTab === tab 
-                  ? 'bg-navy text-white border-navy shadow-lg shadow-navy/20 dark:bg-gold dark:text-deep-navy dark:border-gold dark:shadow-gold/10' 
-                  : 'bg-white/50 text-navy border-royal/10 hover:bg-gold/10 hover:text-deep-navy hover:border-gold/30 dark:bg-slate-900/50 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-white'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
         {/* Grid Setup */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          key={activeTab} // Force re-animation on tab change
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           <AnimatePresence mode="popLayout">
@@ -180,7 +150,7 @@ const Certificates = () => {
         </motion.div>
 
         {/* View More / View Less */}
-        {filteredCertifications.length > INITIAL_VISIBLE && (
+        {certifications.length > INITIAL_VISIBLE && (
           <div className="mt-16 flex justify-center">
             <button
               onClick={handleViewMore}
